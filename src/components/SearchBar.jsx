@@ -2,7 +2,7 @@ import { FileText, Globe, Search } from "lucide-react";
 import algoliasearch from "algoliasearch/lite";
 import { useState } from "react";
 
-const SearchBar = ({ onResultClick }) => {
+const SearchBar = ({ onResultClick, currentUser }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const ALGOLIA_KEY = import.meta.env.VITE_ALGOLIA_KEY;
@@ -16,6 +16,7 @@ const SearchBar = ({ onResultClick }) => {
       try {
         const result = await index.search(searchQuery.trim(), {
           hitsPerPage: 5,
+          filters: `user_id:${currentUser.id}`,
         });
 
         const formattedResults = result.hits.map((hit) => ({
@@ -56,7 +57,7 @@ const SearchBar = ({ onResultClick }) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onKeyPress={handleKeyPress}
-          placeholder="Search your documents..."
+          placeholder="Search for keyword and press enter..."
           style={{
             width: "100%",
             padding: "1rem 1rem 1rem 2.5rem",

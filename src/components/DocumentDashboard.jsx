@@ -200,6 +200,7 @@ const DocumentDashboard = ({ currentUser, onLogout }) => {
             onSearch={handleSearch}
             searchResults={searchResults}
             onResultClick={handleResultClick}
+            currentUser={currentUser}
           />
         </div>
 
